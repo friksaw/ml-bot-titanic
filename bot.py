@@ -2,7 +2,7 @@ import time
 import telebot
 from ipynb.fs.defs.ml import is_user_alive
 
-bot = telebot.TeleBot('token')
+bot = telebot.TeleBot('1465722335:AAGlKk_Fp-Kx9Fn4ZPycbNrH9vW1-Uv4F-A')
 
 
 @bot.message_handler(commands=['start'])
@@ -18,18 +18,15 @@ def answer(message):
     bot.send_message(message.chat.id, 'Анализируем...')
     passenger_data = message.text.split()
     passenger_data.insert(0, 0)
-    passenger_data.insert(7, ',')
+    passenger_data.insert(9, ',')
+    passenger_data[2] = '"',passenger_data[2],'"'
 
-    try:
-        answer = is_user_alive(passenger_data)
+    answer = is_user_alive(passenger_data)
 
-        if int(answer):
-            bot.send_message(message.chat.id, 'Везунчик! Видимо, этот пассажир успел на спасательную шлюпку.')
-        elif int(answer) == 0:
-            bot.send_message(message.chat.id, 'Увы, но Титаник ваш пассажир... не пережил бы.')
-    except Exception:
-        bot.send_message(message.chat.id, 'Вы ввели что-то не так. Проверьте порядок введенных данных.')
-
+    if int(answer) == 1:
+        bot.send_message(message.chat.id, 'Везунчик! Видимо, этот пассажир успел на спасательную шлюпку.')
+    elif int(answer) == 0:
+        bot.send_message(message.chat.id, 'Увы, но Титаник ваш пассажир... не пережил бы.')
 
     do_again(message)
 
